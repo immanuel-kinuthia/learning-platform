@@ -33,3 +33,20 @@ def register():
     db.session.add(new_user)
     db.session.commit()
     return jsonify({'message': 'User registered'}), 201
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    user = User.query.filter_by(email=data['email']).first()
+    if user and check_password_hash(user.password, data['password']):
+        access_token = create_access_token(identity=str(user.id))
+        return jsonify({
+            'token': access_token,
+            'user_id': user.id,
+            'name': user.name,
+            'email': user.email,
+            'role': user.role
+        }), 200
+    return jsonify({'error': 'Invalid credentials'}), 401
+
+
