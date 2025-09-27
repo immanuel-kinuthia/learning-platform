@@ -157,3 +157,8 @@ def get_course(id):
         'category': course.category,
         'enrolled': enrolled
     }), 200
+
+@app.route('/courses/<int:id>/reviews', methods=['GET'])
+def get_reviews(id):
+    reviews = Review.query.filter_by(course_id=id).all()
+    return jsonify([{'id': r.id, 'rating': r.rating, 'comment': r.comment} for r in reviews]), 200
