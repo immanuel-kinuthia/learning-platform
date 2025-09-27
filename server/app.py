@@ -64,3 +64,17 @@ def create_course():
     db.session.add(new_course)
     db.session.commit()
     return jsonify({'message': 'Course created', 'id': new_course.id}), 201
+
+@app.route('/courses/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_course(id):
+    current_user_id = int(get_jwt_identity())
+    course = Course.query.get_or_404(id)
+    if course.user_id != current_user_id:
+        return jsonify({'error': 'Unauthorized'}), 403
+    data = request.get_json()
+    course.title = data.get('title', course.title)
+    course.description = data.get('description', course.description)
+    course.category = data.get('category', course.category)
+    db.session.commit()
+    return jsonify({'id': course.id, 'title': course.title, 'description': course.description, 'category': course.category}), 200
