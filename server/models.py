@@ -26,3 +26,11 @@ class Course(db.Model, SerializerMixin):
 
     enrollments = db.relationship('Enrollment', backref='course', lazy=True)
     reviews = db.relationship('Review', backref='course', lazy=True)
+
+class Enrollment(db.Model, SerializerMixin):
+    serialize_rules = ('-user', '-course')
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    progress = db.Column(db.Integer, default=0)
