@@ -130,3 +130,14 @@ def update_progress(id):
     db.session.commit()
     return jsonify({'message': 'Progress updated', 'progress': enrollment.progress, 'status': enrollment.status}), 200
 
+@app.route('/my-enrollments', methods=['GET'])
+@jwt_required()
+def my_enrollments():
+    current_user_id = int(get_jwt_identity())
+    enrollments = Enrollment.query.filter_by(user_id=current_user_id).all()
+    return jsonify([{
+        'id': e.id,
+        'course': {'id': e.course.id, 'title': e.course.title},
+        'progress': e.progress,
+        'status': e.status
+    } for e in enrollments]), 200
