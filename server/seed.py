@@ -17,3 +17,7 @@ course2 = Course(title="Web Development", description="Build websites", category
 db.session.add(course1)
 db.session.add(course2)
 db.session.commit()
+
+enrollment = Enrollment(user_id=student.id, course_id=course1.id, progress=50)
+db.session.add(enrollment)
+db.session.commit()
