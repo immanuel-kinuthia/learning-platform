@@ -18,3 +18,18 @@ CORS(app)
 db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
+
+@app.route('/')
+def home():
+    return jsonify({'message': 'Welcome to SkillShare'}), 200
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    if User.query.filter_by(email=data['email']).first():
+        return jsonify({'error': 'Email already exists'}), 400
+    hashed_password = generate_password_hash(data['password'])
+    new_user = User(name=data['name'], email=data['email'], password=hashed_password, role=data.get('role', 'student'))
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({'message': 'User registered'}), 201
