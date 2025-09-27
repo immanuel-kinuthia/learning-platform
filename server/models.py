@@ -34,3 +34,12 @@ class Enrollment(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
     progress = db.Column(db.Integer, default=0)
+
+class Review(db.Model, SerializerMixin):
+    serialize_rules = ('-user', '-course')
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    comment = db.Column(db.String(200))
