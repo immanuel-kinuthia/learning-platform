@@ -89,3 +89,29 @@ def delete_course(id):
     db.session.delete(course)
     db.session.commit()
     return jsonify({'message': 'Course deleted'}), 200
+
+@app.route('/enrollments', methods=['POST'])
+@jwt_required()
+def enroll():
+    current_user_id = int(get_jwt_identity())
+    data = request.get_json()
+    print(f"Data received: {data}")
+    if not data or 'course_id' not in data:
+        return jsonify({'error': 'Invalid data'}), 400
+    course_id = data['course_id']
+    print(f"Course ID: {course_id}, type: {type(course_id)}")
+    if not isinstance(course_id, int):
+        try:
+            course_id = int(course_id)
+        except ValueError:
+            return jsonify({'error': 'course_id must be integer'}), 400
+    if Enrollment.query.filter_by(user_id=current_user_id, course_id=course_id).first():
+        return jsonify({'error': 'Already enrolled'}), 400
+    new_enrollment = Enrollment(user_id=current_user_id, course_id=course_id)
+    db.session.add(new_enrollment)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'Failed to enroll', 'details': str(e)}), 500
+    return jsonify({'message': 'Enrolled'}), 201
