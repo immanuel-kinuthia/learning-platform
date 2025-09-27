@@ -49,4 +49,18 @@ def login():
         }), 200
     return jsonify({'error': 'Invalid credentials'}), 401
 
+@app.route('/courses', methods=['GET'])
+def get_courses():
+    courses = Course.query.all()
+    return jsonify([{'id': c.id, 'title': c.title, 'description': c.description, 'category': c.category, 'user_id': c.user_id} for c in courses]), 200
 
+
+@app.route('/courses', methods=['POST'])
+@jwt_required()
+def create_course():
+    current_user_id = int(get_jwt_identity())
+    data = request.get_json()
+    new_course = Course(title=data['title'], description=data['description'], category=data['category'], user_id=current_user_id)
+    db.session.add(new_course)
+    db.session.commit()
+    return jsonify({'message': 'Course created', 'id': new_course.id}), 201
