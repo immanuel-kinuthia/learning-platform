@@ -15,3 +15,14 @@ class User(db.Model, SerializerMixin):
     courses = db.relationship('Course', backref='creator', lazy=True)
     enrollments = db.relationship('Enrollment', backref='user', lazy=True)
 
+class Course(db.Model, SerializerMixin):
+    serialize_rules = ('-enrollments', '-reviews', '-creator')
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
+    category = db.Column(db.String(50), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    enrollments = db.relationship('Enrollment', backref='course', lazy=True)
+    reviews = db.relationship('Review', backref='course', lazy=True)
