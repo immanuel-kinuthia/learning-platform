@@ -21,3 +21,9 @@ db.session.commit()
 enrollment = Enrollment(user_id=student.id, course_id=course1.id, progress=50)
 db.session.add(enrollment)
 db.session.commit()
+
+review = Review(user_id=student.id, course_id=course1.id, rating=5, comment="Great course!")
+db.session.add(review)
+db.session.commit()
+
+print("Database seeded with users, courses, enrollments, and reviews.")
