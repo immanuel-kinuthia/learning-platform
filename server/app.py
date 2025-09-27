@@ -78,3 +78,14 @@ def update_course(id):
     course.category = data.get('category', course.category)
     db.session.commit()
     return jsonify({'id': course.id, 'title': course.title, 'description': course.description, 'category': course.category}), 200
+
+@app.route('/courses/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_course(id):
+    current_user_id = int(get_jwt_identity())
+    course = Course.query.get_or_404(id)
+    if course.user_id != current_user_id:
+        return jsonify({'error': 'Unauthorized'}), 403
+    db.session.delete(course)
+    db.session.commit()
+    return jsonify({'message': 'Course deleted'}), 200
