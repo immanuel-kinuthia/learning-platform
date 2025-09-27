@@ -7,3 +7,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User, Course, Enrollment, Review
 import os
 from dotenv import load_dotenv
+
+load_dotenv()
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///app.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'your-secret-key')
+CORS(app)
+db.init_app(app)
+migrate = Migrate(app, db)
+jwt = JWTManager(app)
