@@ -21,12 +21,8 @@ Validations: Data types (e.g., integer for progress), formats (e.g., email, min 
 
 ## Models and Relationships
 
-Using the ERD (designed with dbdiagram.io):
+<img width="1358" height="550" alt="React Flask" src="https://github.com/user-attachments/assets/1ed784da-2aa2-4325-8ca5-eb75e64294ff" />
 
-User: id (PK), name, email (unique), password (hashed), role (mentor/student).
-Course: id (PK), title, description, category, created_by (FK to User).
-Enrollment: id (PK), user_id (FK to User), course_id (FK to Course), progress (0-100, user-submittable), status (active/completed).
-Review: id (PK), user_id (FK to User), course_id (FK to Course), rating (1-5), comment.
 
 ### Relationships:
 
