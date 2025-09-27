@@ -141,3 +141,19 @@ def my_enrollments():
         'progress': e.progress,
         'status': e.status
     } for e in enrollments]), 200
+
+@app.route('/courses/<int:id>', methods=['GET'])
+def get_course(id):
+    course = Course.query.get_or_404(id)
+    try:
+        current_user_id = int(get_jwt_identity())
+        enrolled = Enrollment.query.filter_by(user_id=current_user_id, course_id=id).first() is not None
+    except:
+        enrolled = False
+    return jsonify({
+        'id': course.id,
+        'title': course.title,
+        'description': course.description,
+        'category': course.category,
+        'enrolled': enrolled
+    }), 200
