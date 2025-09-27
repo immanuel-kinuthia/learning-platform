@@ -14,3 +14,11 @@ def get_engine():
     except (TypeError, AttributeError):
         return current_app.extensions['migrate'].db.engine
     
+def get_engine_url():
+    try:
+        return get_engine().url.render_as_string(hide_password=False).replace('%', '%%')
+    except AttributeError:
+        return str(get_engine().url).replace('%', '%%')
+    
+
+    
