@@ -12,3 +12,8 @@ db.session.add(mentor)
 db.session.add(student)
 db.session.commit()
 
+course1 = Course(title="Intro to Python", description="Learn Python basics", category="Programming", user_id=mentor.id)
+course2 = Course(title="Web Development", description="Build websites", category="Web", user_id=mentor.id)
+db.session.add(course1)
+db.session.add(course2)
+db.session.commit()
