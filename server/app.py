@@ -115,3 +115,18 @@ def enroll():
         db.session.rollback()
         return jsonify({'error': 'Failed to enroll', 'details': str(e)}), 500
     return jsonify({'message': 'Enrolled'}), 201
+
+@app.route('/enrollments/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_progress(id):
+    current_user_id = int(get_jwt_identity())
+    data = request.get_json()
+    enrollment = Enrollment.query.filter_by(id=id, user_id=current_user_id).first()
+    if not enrollment:
+        return jsonify({'error': 'Enrollment not found'}), 404
+    enrollment.progress = min(max(data['progress'], 0), 100)
+    if enrollment.progress == 100:
+        enrollment.status = 'completed'
+    db.session.commit()
+    return jsonify({'message': 'Progress updated', 'progress': enrollment.progress, 'status': enrollment.status}), 200
+
