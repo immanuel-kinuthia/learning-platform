@@ -9,7 +9,7 @@ The project follows best practices for full-stack development:
 **Vertical Slices:** Built features end-to-end (e.g., authentication first, then course creation, enrollment, etc.).
 **Planning First:** User stories, models/relationships (ERD), and wireframes were designed before coding.
 
-This app demonstrates:
+**This app demonstrates:**
 
 Flask with SQLAlchemy for backend models and API routes.
 React with React Router, Formik/Yup for forms/validation, and Axios for API calls.
@@ -42,7 +42,7 @@ Git (optional)
 
 Clone the repo (if applicable) or create the directory structure as above.
 
-###Backend Setup:
+### Backend Setup:
 
 `cd server`
 `pip install -r requirements.txt`
