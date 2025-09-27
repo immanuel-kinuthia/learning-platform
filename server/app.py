@@ -162,3 +162,19 @@ def get_course(id):
 def get_reviews(id):
     reviews = Review.query.filter_by(course_id=id).all()
     return jsonify([{'id': r.id, 'rating': r.rating, 'comment': r.comment} for r in reviews]), 200
+
+@app.route('/reviews', methods=['POST'])
+@jwt_required()
+def add_review():
+    current_user_id = int(get_jwt_identity())
+    data = request.get_json()
+    if Review.query.filter_by(user_id=current_user_id, course_id=data['course_id']).first():
+        return jsonify({'error': 'Review already exists'}), 400
+    new_review = Review(user_id=current_user_id, course_id=data['course_id'], rating=data['rating'], comment=data['comment'])
+    db.session.add(new_review)
+    db.session.commit()
+    return jsonify({'message': 'Review added'}), 201
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
