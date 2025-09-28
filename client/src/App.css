@@ -1,0 +1,107 @@
+:root {
+  --bg-color: #f5f6fa;
+  --text-color: #333;
+  --nav-bg: #2c3e50;
+  --border-color: #ddd;
+  --button-bg: #007bff;
+  --logout-bg: #e74c3c;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --nav-bg: #333;
+  --border-color: #555;
+  --button-bg: #0056b3;
+  --logout-bg: #b02a37;
+}
+
+.App {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 20px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+nav {
+  background-color: var(--nav-bg);
+  padding: 1rem;
+  margin-bottom: 20px;
+}
+
+nav a {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav button {
+  background-color: var(--logout-bg);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+nav button:hover {
+  opacity: 0.8;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input, textarea, button {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+  nav div {
+    width: 100%;
+    text-align: center;
+  }
+}
