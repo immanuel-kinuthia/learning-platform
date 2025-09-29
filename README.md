@@ -1,5 +1,9 @@
 # SkillShare
 
+https://learning-platform-7yrj.onrender.com/
+
+By: Jesse Matara and Immanuel Kinuthia
+
 ### Overview
 
 This is a full-stack web application built with a Flask API backend and a React frontend. It allows mentors to create courses and students to enroll in them, track their progress, and complete their learning journey. The app includes user authentication, course management, enrollment tracking, and extra features like reviews, ratings, certificates, and dark mode.
@@ -18,6 +22,7 @@ At least three models with required relationships (two one-to-many, one reciproc
 Full CRUD on Courses; create/read on others.
 Client-side routing (Home, Profile, Course Details).
 Validations: Data types (e.g., integer for progress), formats (e.g., email, min length for strings).
+**NB: Only Course creators can delete their course**
 
 ## Models and Relationships
 
@@ -72,7 +77,7 @@ Open http://localhost:3000.
 Register/login as mentor or student.
 Mentors: Create/edit courses on Home.
 Students: Enroll via Home, track progress on Profile/Course Details.
-Extras: Submit reviews on Course Details, download certificates on completion, toggle dark mode in NavBar.
+Extras: Submit reviews on Course Details, toggle dark mode in NavBar.
 
 ## Testing
 
