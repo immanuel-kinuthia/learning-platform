@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/", static_folder="./client/build")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///app.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'your-secret-key')
@@ -21,7 +21,11 @@ jwt = JWTManager(app)
 
 @app.route('/')
 def home():
-    return jsonify({'message': 'Welcome to SkillShare'}), 200
+    return app.send_static_file("index.html")
+
+@app.errorhandler(404)
+def not_found():
+    return app.send_static_file("index.html")
 
 @app.route('/register', methods=['POST'])
 def register():
